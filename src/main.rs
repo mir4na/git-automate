@@ -1,6 +1,17 @@
 use std::process::{Command, exit};
 // use names::Generator;
 
+fn pull() {
+    let pull = Command::new("git")
+    .arg("pull").arg("origin").arg("master").output()
+    .expect("failed to pull repo");
+
+    if !pull.status.success() {
+        eprintln!("Error: Failed to pull repo");
+        exit(1);
+    }
+}
+
 fn commit_push() {
     let add = Command::new("git")
         .arg("add").arg(".").output()
@@ -27,6 +38,7 @@ fn commit_push() {
 
     if !push.status.success() {
         eprintln!("Error: Failed to push files: {:?}", String::from_utf8_lossy(&push.stderr));
+        pull();
         exit(1);
     }
 

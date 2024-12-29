@@ -7,7 +7,7 @@ fn commit_push() {
         .expect("failed to git add");
 
     if !add.status.success() {
-        eprintln!("Error: Failed to add files");
+        eprintln!("Error: Failed to add files: {:?}", String::from_utf8_lossy(&add.stderr));
         exit(1);
     }
 
@@ -17,7 +17,7 @@ fn commit_push() {
         .expect("failed to git commit");
 
     if !commit.status.success() {
-        eprintln!("Error: Failed to commit files");
+        eprintln!("Error: Failed to commit files: {:?}", String::from_utf8_lossy(&commit.stderr));
         exit(1);
     }
 
@@ -26,7 +26,7 @@ fn commit_push() {
         .expect("failed to git push");
 
     if !push.status.success() {
-        eprintln!("Error: Failed to push files");
+        eprintln!("Error: Failed to push files: {:?}", String::from_utf8_lossy(&push.stderr));
         exit(1);
     }
 

@@ -1,19 +1,20 @@
 use std::process::{Command, exit};
 use names::Generator;
 
-fn commit_push(){
+fn commit_push() {
     let add = Command::new("git")
-    .arg("add").arg(".").output()
-    .expect("failed to git add");
+        .arg("add").arg(".").output()
+        .expect("failed to git add");
 
-    if !add.status.success(){
+    if !add.status.success() {
         eprintln!("Error: Failed to add files");
         exit(1);
     }
 
+    let commit_message = generator();
     let commit = Command::new("git")
-    .arg("commit").arg("-m").arg(generator()).output()
-    .expect("failed to git commit");
+        .arg("commit").arg("-m").arg(&commit_message).output()
+        .expect("failed to git commit");
 
     if !commit.status.success() {
         eprintln!("Error: Failed to commit files");
@@ -21,21 +22,22 @@ fn commit_push(){
     }
 
     let push = Command::new("git")
-    .arg("push").arg("origin").arg("master").output()
-    .expect("failed to git push");
+        .arg("push").arg("origin").arg("main").output()
+        .expect("failed to git push");
 
     if !push.status.success() {
         eprintln!("Error: Failed to push files");
         exit(1);
     }
 
-    println!("Success push files to git repo!");
+    println!("Successfully pushed files to git repo!");
 }
 
 fn generator() -> String {
     let mut generator = Generator::default();
     generator.next().unwrap()
 }
+
 fn main() {
     commit_push();
 }

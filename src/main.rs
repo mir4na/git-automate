@@ -21,7 +21,7 @@ fn commit_push(){
     }
 
     let push = Command::new("git")
-    .arg("push").arg("origin").arg("master").output()
+    .arg("push").arg("origin").arg("mainr").output()
     .expect("failed to git push");
 
     if !push.status.success() {

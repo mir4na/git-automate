@@ -1,5 +1,4 @@
 use std::process::{Command, exit};
-use names::Generator;
 
 // fn pull() {
 //     let pull = Command::new("git")
@@ -22,9 +21,8 @@ fn commit_push() {
         exit(1);
     }
 
-    let commit_message = generator();
     let commit = Command::new("git")
-        .arg("commit").arg("-m").arg(commit_message).output()
+        .arg("commit").arg("-m").arg("update repo").output()
         .expect("failed to git commit");
 
     if !commit.status.success() {
@@ -43,11 +41,6 @@ fn commit_push() {
     }
 
     println!("Successfully pushed files to git repo!");
-}
-
-fn generator() -> String {
-    let mut generator = Generator::default();
-    generator.next().unwrap()
 }
 
 fn main() {
